@@ -686,6 +686,7 @@ attrib_needs_escaping = re.compile(r'[&"<]').search
 cdata_needs_escaping = re.compile(r'[&<]').search
 
 def _both_case(mapping):
+    # Add equivalent upper-case keys to mapping.
     lc_keys = mapping.keys()
     for k in lc_keys:
         mapping[k.upper()] = mapping[k]
