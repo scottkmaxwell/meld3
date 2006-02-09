@@ -1,7 +1,6 @@
 import sys
 import profile as profiler
 import pstats
-#import cProfile
 
 sys.path.insert(0, '/Users/chrism/projects/meld/z310/lib/python')
 from zope.pagetemplate.pagetemplate import PageTemplate
@@ -33,6 +32,19 @@ template = """<html xmlns:tal="http://xml.zope.org/namespaces/tal">
   </body>
 </html>"""
 
+class IO:
+    def __init__(self):
+        self.data = []
+
+    def write(self, data):
+        self.data.append(data)
+
+    def getvalue(self):
+        return ''.join(self.data)
+
+    def clear(self):
+        self.data = []
+
 values = []
 for thing in range(0, 20):
     values.append((str(thing), str(thing)))
@@ -41,7 +53,9 @@ def test(pt):
     foo = pt(values=values)
 
 def profile(num):
-    profiler.run("[test(pt) for x in range(0,20)]", 'logfile_zpt.dat')
+    import cProfile
+    profiler = cProfile
+    profiler.run("[test(pt) for x in range(0,100)]", 'logfile_zpt.dat')
     stats = pstats.Stats('logfile_zpt.dat')
     stats.strip_dirs()
     stats.sort_stats('cumulative', 'calls')

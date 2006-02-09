@@ -251,10 +251,6 @@ class MeldAPITests(unittest.TestCase):
             'method':'POST', 'action':'#',
             '{http://www.plope.com/software/meld3}id': 'form1'})
 
-    def test_attributes_nonstringtype_raises(self):
-        root = self._makeElement('<root></root>')
-        self.assertRaises(ValueError, root.attributes, foo=1)
-
 class MeldElementInterfaceTests(unittest.TestCase):
     def _getTargetClass(self):
         from meld3 import _MeldElementInterface
